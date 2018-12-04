@@ -39,13 +39,4 @@ public class QuickUnion
     // Trees can get tall
     // Find is too expensive
 
-    // Improvement 1:
-    // weighting
-    // balance by linking root of smaller tree to root of larger tree
-
-    public void weightedUnion(int p, int q)
-    {
-
-    }
-
 }
