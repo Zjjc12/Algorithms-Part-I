@@ -1,4 +1,4 @@
-
+package LinkedList;
 public class StackOfStrings
 {
 	StringLinkedList list = new StringLinkedList();

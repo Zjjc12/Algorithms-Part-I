@@ -1,3 +1,4 @@
+package LinkedList;
 public class StringLinkedList
 {
 	private Node first = null;

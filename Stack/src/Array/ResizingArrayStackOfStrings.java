@@ -1,3 +1,4 @@
+package Array;
 public class ResizingArrayStackOfStrings
 {
 	private String[] s;
@@ -17,19 +18,23 @@ public class ResizingArrayStackOfStrings
 		s[N++] = item;
 	}
 
-	private void resize(int capacity) {
+	private void resize(int capacity)
+	{
 		String[] copy = new String[capacity];
-		for (int i = 0; i < N; i++) {
+		for (int i = 0; i < N; i++)
+		{
 			copy[i] = s[i];
 		}
 		s = copy;
 	}
-	
-	public String pop() {
+
+	public String pop()
+	{
 		String item = s[--N];
 		s[N] = null;
-		if(N > 0 && N == s.length/4) {
-			resize(s.length/2);
+		if (N > 0 && N == s.length / 4)
+		{
+			resize(s.length / 2);
 		}
 		return item;
 	}
