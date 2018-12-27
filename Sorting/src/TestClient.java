@@ -12,7 +12,9 @@ public class TestClient
 		Date[] dates = c.generateDates(100);
 		
 			
-		Selection.sort(dates);
+		Shell.sort(dates);
+		StdRandom.shuffle(dates);
+		
 		
 		c.printDate(dates);
 	}
