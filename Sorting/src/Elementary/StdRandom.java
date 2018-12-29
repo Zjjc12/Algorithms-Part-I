@@ -1,3 +1,4 @@
+package Elementary;
 import java.util.Random;
 
 public class StdRandom

@@ -1,6 +1,11 @@
 
 import java.util.Random;
 
+import Classic.Merge;
+import Elementary.Shell;
+import Elementary.StdRandom;
+
+
 public class TestClient
 {
 	Random rand = new Random();
@@ -12,9 +17,7 @@ public class TestClient
 		Date[] dates = c.generateDates(100);
 		
 			
-		Shell.sort(dates);
-		StdRandom.shuffle(dates);
-		
+		Merge.sort(dates);
 		
 		c.printDate(dates);
 	}
