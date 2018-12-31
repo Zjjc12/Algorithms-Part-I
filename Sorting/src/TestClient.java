@@ -2,6 +2,7 @@
 import java.util.Random;
 
 import Classic.Merge;
+import Classic.Quick;
 import Elementary.Shell;
 import Elementary.StdRandom;
 
@@ -17,7 +18,7 @@ public class TestClient
 		Date[] dates = c.generateDates(100);
 		
 			
-		Merge.sort(dates);
+		Quick.sort(dates);
 		
 		c.printDate(dates);
 	}
