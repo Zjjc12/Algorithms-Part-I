@@ -15,10 +15,10 @@ public class TestClient
 		
 		TestClient c = new TestClient();
 		
-		Date[] dates = c.generateDates(100);
+		Date[] dates = c.generateDates(1000);
 		
 			
-		Quick.sort(dates);
+		Quick.threeWaySort(dates);
 		
 		c.printDate(dates);
 	}
