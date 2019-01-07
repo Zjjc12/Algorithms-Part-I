@@ -1,10 +1,14 @@
 
-public class BST<Key extends Comparable<Key>, Value>
+public class RedLeaningBST<Key extends Comparable<Key>, Value>
 {
 	private Node root;
 
+	private static final boolean RED = true;
+	private static final boolean BLACK = false;
+	
 	private class Node
 	{
+		
 		// Stores the key and value
 		private Key key;
 		private Value val;
@@ -14,13 +18,67 @@ public class BST<Key extends Comparable<Key>, Value>
 		
 		private int count;
 
-		public Node(Key key, Value val)
+		public Node(Key key, Value val, boolean color)
 		{
 			this.key = key;
 			this.val = val;
+			this.color = color;
 		}
+		
+		// Stores color of parent link
+		boolean color;
 	}
 
+	private boolean isRed(Node x)
+	{
+		// Null links are black
+		if (x == null)
+			return false;
+		return x.color == RED;
+	}
+	
+	// Orient a right leaning red link to lean left
+	private Node rotateLeft(Node h)
+	{
+		// Check to make sure right link is red
+		assert isRed(h.right);
+		
+		// Rotate left
+		Node x = h.right;
+		h.right = x.left;
+		x.left = h;
+		x.color = h.color;
+		h.color = RED;
+		return x;
+	}
+	
+	// Orient a left leaning red link to lean right
+	private Node rotateRight(Node h)
+	{
+		assert isRed(h.left);
+		
+		// Rotate right
+		Node x = h.left;
+		h.left = x.right;
+		x.right = h;
+		x.color = h.color;
+		h.color = RED;
+		return x;
+	}
+	
+	// Flip colors red nodes to black and make upper node red (Temporary 4-node)
+	private void flipColors(Node h)
+	{
+		assert !isRed(h);
+		assert isRed(h.left);
+		assert isRed(h.right);
+		
+		h.color = RED;
+		h.left.color = BLACK;
+		h.right.color = BLACK;
+	}
+	
+	
 	// Get the value of a certain key by searching through a binary tree
 	public Value get(Key key)
 	{
@@ -66,31 +124,40 @@ public class BST<Key extends Comparable<Key>, Value>
 		root = put(root, key, val);
 	}
 
-	// Note: Nothing is rearranged
-	private Node put(Node x, Key key, Value val)
+	
+	// Simulate 2-3 search tree to maintain balance using red and black links
+	// Red representing intra-connection in node
+	private Node put(Node h, Key key, Value val)
 	{
 		// If reached a null branch, returned a new Node with key and value
-		if (x == null)
-			return new Node(key, val);
-		int cmp = key.compareTo(x.key);
+		if (h == null)
+			return new Node(key, val, RED);
+		int cmp = key.compareTo(h.key);
 
 		// If new key is smaller, go down to the left
 		if (cmp < 0)
 			// Link is updated if a new node is created
-			x.left = put(x.left, key, val);
+			h.left = put(h.left, key, val);
 		// If new key is greater, go down to the right
 		else if (cmp > 0)
 			// Link is updated if a new node is created
-			x.right = put(x.right, key, val);
+			h.right = put(h.right, key, val);
 
 		// If value equal, then just replace the value
 		else
-			x.val = val;
+			h.val = val;
 		
-		// Add one to count of node
-		x.count = 1 + size(x.left) + size(x.right);
-
-		return x;
+		// Right child red, left child black: rotate left
+		if (isRed(h.right) && !isRed(h.left))
+			h = rotateLeft(h);
+		// Left child, left-left grandchild red: rotate right
+		if (isRed(h.left) && isRed(h.left.left))
+			h = rotateRight(h);
+		// Both children red: Flip colors
+		if (isRed(h.left) && isRed(h.right))
+			flipColors(h);
+			
+		return h;
 	}
 
 	public Key max()
@@ -203,6 +270,9 @@ public class BST<Key extends Comparable<Key>, Value>
 		inorder(x.right, q);
 	}
 	
+	// Deletion not Implemented
+	// Hilbard deletion does not optimize red-black bst
+	/*
 	public void deleteMin() 
 	{
 		root = deleteMin(root);
@@ -284,12 +354,13 @@ public class BST<Key extends Comparable<Key>, Value>
 			// to the new parent)
 			x.left = t.left;
 		}
+		
 		// Update count
 		x.count = size(x.left) + size (x.right) + 1;
 		
 		return x;
 	}
-	
+	*/
 	public boolean isEmpty() {
         return size() == 0;
     }
