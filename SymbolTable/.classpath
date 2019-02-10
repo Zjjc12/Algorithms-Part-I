@@ -3,5 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/Queues"/>
+	<classpathentry kind="lib" path="C:/Users/zjjc1/Downloads/stdlib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/zjjc1/Downloads/algs4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
